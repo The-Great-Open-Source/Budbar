@@ -88,7 +88,7 @@ final class RFCOMMConnector: BudsConnector {
         let chosen = uuids.first(where: isSoundcoreVendorUUID) ?? sppUUID
 
         let record: IOBluetoothSDPServiceRecord? = chosen.withUnsafeBytes { raw in
-            guard let sdpUUID = IOBluetoothSDPUUID(bytes: raw.baseAddress, length: UInt32(raw.count)) else {
+            guard let sdpUUID = IOBluetoothSDPUUID(bytes: raw.baseAddress, length: raw.count) else {
                 return nil
             }
             return device.getServiceRecord(for: sdpUUID)
