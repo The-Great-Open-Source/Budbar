@@ -3,15 +3,14 @@
 import SwiftUI
 import SoundcoreProtocol
 
-/// Three big buttons with a highlight that slides between them.
+/// Control Center style tiles: a round icon button with a label underneath.
 struct ModePicker: View {
     @EnvironmentObject private var model: AppModel
     let selected: AmbientSoundMode
     @Namespace private var highlight
-    @State private var hovered: AmbientSoundMode?
 
     var body: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: 0) {
             ForEach(AmbientSoundMode.allCases) { mode in
                 Button {
                     guard mode != selected else { return }
@@ -20,46 +19,46 @@ struct ModePicker: View {
                         model.update { $0.ambient = mode }
                     }
                 } label: {
-                    VStack(spacing: 7) {
-                        Image(systemName: mode.symbol)
-                            .font(.system(size: 24, weight: .medium))
-                            .symbolRenderingMode(.hierarchical)
-                            .frame(height: 26)
+                    VStack(spacing: 8) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.primary.opacity(0.10))
+                            if selected == mode {
+                                Circle()
+                                    .fill(mode.tint)
+                                    .matchedGeometryEffect(id: "highlight", in: highlight)
+                            }
+                            Image(systemName: mode.symbol)
+                                .font(.system(size: 19, weight: .medium))
+                                .foregroundStyle(selected == mode ? Color.white : Color.primary)
+                        }
+                        .frame(width: 52, height: 52)
+
                         Text(mode.title)
-                            .font(.system(size: 11, weight: .semibold))
+                            .font(.system(size: 11, weight: .medium))
+                            .foregroundStyle(selected == mode ? Color.primary : Color.secondary)
                             .lineLimit(1)
                             .minimumScaleFactor(0.8)
                     }
                     .frame(maxWidth: .infinity)
-                    .frame(height: 86)
-                    .foregroundStyle(selected == mode ? Color.white : Color.primary.opacity(0.7))
-                    .background {
-                        if selected == mode {
-                            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                .fill(mode.tint.gradient)
-                                .shadow(color: mode.tint.opacity(0.35), radius: 8, y: 3)
-                                .matchedGeometryEffect(id: "highlight", in: highlight)
-                        }
-                    }
-                    .background {
-                        if hovered == mode && selected != mode {
-                            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                .fill(Color.primary.opacity(0.06))
-                        }
-                    }
-                    .contentShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                    .contentShape(Rectangle())
                 }
                 .buttonStyle(PressableStyle())
-                .onHover { inside in hovered = inside ? mode : (hovered == mode ? nil : hovered) }
                 .keyboardShortcut(KeyEquivalent(mode.shortcutKey), modifiers: .command)
                 .accessibilityLabel(mode.title)
                 .accessibilityAddTraits(selected == mode ? .isSelected : [])
             }
         }
-        .padding(4)
+        .padding(.vertical, 14)
+        .padding(.horizontal, 4)
+        .frame(maxWidth: .infinity)
         .background(
-            RoundedRectangle(cornerRadius: 26, style: .continuous)
+            RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
                 .fill(Color.primary.opacity(0.06))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
+                .strokeBorder(Color.primary.opacity(0.07), lineWidth: 0.5)
         )
         .animation(Metrics.spring, value: selected)
     }

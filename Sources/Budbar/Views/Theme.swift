@@ -67,31 +67,23 @@ extension MultiSceneMode {
 }
 
 enum Metrics {
-    static let popoverWidth: CGFloat = 360
-    static let cardRadius: CGFloat = 22
+    static let popoverWidth: CGFloat = 320
+    static let cardRadius: CGFloat = 14
     static let spring = Animation.spring(response: 0.38, dampingFraction: 0.82)
 }
 
 extension View {
-    /// The soft rounded surface used for grouped controls.
+    /// Flat grouped surface, like the sections in macOS Control Center.
     func card() -> some View {
-        padding(16)
+        padding(12)
             .background(
                 RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
-                    .fill(Color.primary.opacity(0.05))
+                    .fill(Color.primary.opacity(0.06))
             )
             .overlay(
                 RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
-                    .strokeBorder(
-                        LinearGradient(
-                            colors: [Color.white.opacity(0.22), Color.white.opacity(0.03)],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        ),
-                        lineWidth: 0.75
-                    )
+                    .strokeBorder(Color.primary.opacity(0.07), lineWidth: 0.5)
             )
-            .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
     }
 }
 

@@ -7,12 +7,12 @@ struct PopoverView: View {
     @EnvironmentObject private var model: AppModel
 
     var body: some View {
-        VStack(spacing: 18) {
+        VStack(spacing: 12) {
             HeaderView()
 
             Group {
                 if model.isConnected, let state = model.state {
-                    VStack(spacing: 18) {
+                    VStack(spacing: 12) {
                         ModePicker(selected: state.soundModes.ambient)
                         ModeDetail(modes: state.soundModes)
                         BatteryRow(state: state)
@@ -27,24 +27,8 @@ struct PopoverView: View {
 
             FooterView()
         }
-        .padding(20)
+        .padding(16)
         .frame(width: Metrics.popoverWidth)
-        .background(alignment: .top) {
-            Ellipse()
-                .fill(glowColor.opacity(0.22))
-                .frame(width: 320, height: 180)
-                .blur(radius: 55)
-                .offset(y: -70)
-                .animation(.easeInOut(duration: 0.5), value: glowColor)
-                .allowsHitTesting(false)
-        }
-    }
-
-    private var glowColor: Color {
-        if model.isConnected, let modes = model.state?.soundModes {
-            return modes.ambient.tint
-        }
-        return .gray
     }
 }
 
@@ -53,36 +37,18 @@ struct PopoverView: View {
 struct HeaderView: View {
     @EnvironmentObject private var model: AppModel
 
-    private var iconTint: Color {
-        if model.isConnected, let modes = model.state?.soundModes {
-            return modes.ambient.tint
-        }
-        return Color.gray
-    }
-
     var body: some View {
-        HStack(spacing: 12) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 13, style: .continuous)
-                    .fill(iconTint.gradient)
-                    .shadow(color: iconTint.opacity(0.4), radius: 8, y: 3)
-                Image(systemName: "earbuds")
-                    .font(.system(size: 19, weight: .semibold))
-                    .foregroundStyle(.white)
-            }
-            .frame(width: 44, height: 44)
-            .animation(.easeInOut(duration: 0.4), value: iconTint)
-
-            VStack(alignment: .leading, spacing: 3) {
+        HStack(alignment: .center, spacing: 10) {
+            VStack(alignment: .leading, spacing: 2) {
                 Text(model.deviceTitle)
-                    .font(.system(size: 15, weight: .semibold))
+                    .font(.system(size: 14, weight: .semibold))
                     .lineLimit(1)
                 HStack(spacing: 5) {
                     Circle()
                         .fill(model.statusColor)
                         .frame(width: 6, height: 6)
                     Text(model.statusText)
-                        .font(.system(size: 11.5))
+                        .font(.system(size: 11))
                         .foregroundStyle(.secondary)
                 }
             }
@@ -91,6 +57,7 @@ struct HeaderView: View {
 
             SettingsMenu()
         }
+        .padding(.horizontal, 2)
     }
 }
 

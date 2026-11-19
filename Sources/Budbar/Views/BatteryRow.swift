@@ -31,17 +31,17 @@ struct BatteryRing: View {
         VStack(spacing: 8) {
             ZStack {
                 Circle()
-                    .stroke(Color.primary.opacity(0.08), lineWidth: 7)
+                    .stroke(Color.primary.opacity(0.08), lineWidth: 5)
                 Circle()
                     .trim(from: 0, to: CGFloat(battery?.percent ?? 0) / 100)
-                    .stroke(color.gradient, style: StrokeStyle(lineWidth: 7, lineCap: .round))
+                    .stroke(color.gradient, style: StrokeStyle(lineWidth: 5, lineCap: .round))
                     .rotationEffect(.degrees(-90))
                     .animation(Metrics.spring, value: battery?.percent)
 
                 if let battery {
                     VStack(spacing: 1) {
                         Text("\(battery.percent)")
-                            .font(.system(size: 15, weight: .semibold, design: .rounded))
+                            .font(.system(size: 13, weight: .semibold, design: .rounded))
                             .contentTransition(.numericText())
                         if battery.isCharging {
                             Image(systemName: "bolt.fill")
@@ -55,7 +55,7 @@ struct BatteryRing: View {
                         .foregroundStyle(.secondary)
                 }
             }
-            .frame(width: 60, height: 60)
+            .frame(width: 50, height: 50)
 
             Text(title)
                 .font(.system(size: 11, weight: .medium))
