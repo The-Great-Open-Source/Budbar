@@ -8,6 +8,7 @@ struct ModePicker: View {
     @EnvironmentObject private var model: AppModel
     let selected: AmbientSoundMode
     @Namespace private var highlight
+    @State private var hovered: AmbientSoundMode?
 
     var body: some View {
         HStack(spacing: 4) {
@@ -21,7 +22,7 @@ struct ModePicker: View {
                 } label: {
                     VStack(spacing: 7) {
                         Image(systemName: mode.symbol)
-                            .font(.system(size: 22, weight: .medium))
+                            .font(.system(size: 24, weight: .medium))
                             .symbolRenderingMode(.hierarchical)
                             .frame(height: 26)
                         Text(mode.title)
@@ -30,19 +31,26 @@ struct ModePicker: View {
                             .minimumScaleFactor(0.8)
                     }
                     .frame(maxWidth: .infinity)
-                    .frame(height: 76)
+                    .frame(height: 86)
                     .foregroundStyle(selected == mode ? Color.white : Color.primary.opacity(0.7))
                     .background {
                         if selected == mode {
-                            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                            RoundedRectangle(cornerRadius: 20, style: .continuous)
                                 .fill(mode.tint.gradient)
                                 .shadow(color: mode.tint.opacity(0.35), radius: 8, y: 3)
                                 .matchedGeometryEffect(id: "highlight", in: highlight)
                         }
                     }
-                    .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .background {
+                        if hovered == mode && selected != mode {
+                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                .fill(Color.primary.opacity(0.06))
+                        }
+                    }
+                    .contentShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(PressableStyle())
+                .onHover { inside in hovered = inside ? mode : (hovered == mode ? nil : hovered) }
                 .keyboardShortcut(KeyEquivalent(mode.shortcutKey), modifiers: .command)
                 .accessibilityLabel(mode.title)
                 .accessibilityAddTraits(selected == mode ? .isSelected : [])
@@ -50,7 +58,7 @@ struct ModePicker: View {
         }
         .padding(4)
         .background(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
                 .fill(Color.primary.opacity(0.06))
         )
         .animation(Metrics.spring, value: selected)

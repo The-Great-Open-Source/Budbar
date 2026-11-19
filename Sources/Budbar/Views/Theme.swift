@@ -67,22 +67,39 @@ extension MultiSceneMode {
 }
 
 enum Metrics {
-    static let popoverWidth: CGFloat = 344
-    static let cardRadius: CGFloat = 18
+    static let popoverWidth: CGFloat = 360
+    static let cardRadius: CGFloat = 22
     static let spring = Animation.spring(response: 0.38, dampingFraction: 0.82)
 }
 
 extension View {
     /// The soft rounded surface used for grouped controls.
     func card() -> some View {
-        padding(14)
+        padding(16)
             .background(
                 RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
                     .fill(Color.primary.opacity(0.05))
             )
             .overlay(
                 RoundedRectangle(cornerRadius: Metrics.cardRadius, style: .continuous)
-                    .strokeBorder(Color.primary.opacity(0.06), lineWidth: 0.5)
+                    .strokeBorder(
+                        LinearGradient(
+                            colors: [Color.white.opacity(0.22), Color.white.opacity(0.03)],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        ),
+                        lineWidth: 0.75
+                    )
             )
+            .shadow(color: .black.opacity(0.08), radius: 10, y: 4)
+    }
+}
+
+/// Shrinks slightly while pressed.
+struct PressableStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.95 : 1)
+            .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
     }
 }

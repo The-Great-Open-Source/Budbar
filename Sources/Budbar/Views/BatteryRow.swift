@@ -31,10 +31,10 @@ struct BatteryRing: View {
         VStack(spacing: 8) {
             ZStack {
                 Circle()
-                    .stroke(Color.primary.opacity(0.08), lineWidth: 6)
+                    .stroke(Color.primary.opacity(0.08), lineWidth: 7)
                 Circle()
                     .trim(from: 0, to: CGFloat(battery?.percent ?? 0) / 100)
-                    .stroke(color.gradient, style: StrokeStyle(lineWidth: 6, lineCap: .round))
+                    .stroke(color.gradient, style: StrokeStyle(lineWidth: 7, lineCap: .round))
                     .rotationEffect(.degrees(-90))
                     .animation(Metrics.spring, value: battery?.percent)
 
@@ -55,7 +55,7 @@ struct BatteryRing: View {
                         .foregroundStyle(.secondary)
                 }
             }
-            .frame(width: 56, height: 56)
+            .frame(width: 60, height: 60)
 
             Text(title)
                 .font(.system(size: 11, weight: .medium))

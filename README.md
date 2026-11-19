@@ -6,6 +6,11 @@ A native macOS menu bar app for controlling Soundcore earbuds. Switch between No
 
 > Unofficial. Not affiliated with, endorsed by, or sponsored by Anker or Soundcore.
 
+<p align="center">
+  <img src="docs/screenshots/popover.png" width="360" alt="Budbar popover">
+  <img src="docs/screenshots/transparency.png" width="360" alt="Budbar in Transparency mode">
+</p>
+
 ## Features
 
 - Lives in the menu bar, opens a compact popover
@@ -15,6 +20,18 @@ A native macOS menu bar app for controlling Soundcore earbuds. Switch between No
 - Keyboard shortcuts: Cmd+1, Cmd+2, Cmd+3 for the three modes
 - Optional launch at login
 - Demo mode so you can try the UI without earbuds
+
+## Supported devices
+
+| Device | Status |
+| --- | --- |
+| Soundcore R60i NC | Works (tested) |
+| Soundcore P31i | Same protocol family, untested |
+| Other Soundcore earbuds | Not supported yet |
+
+Got a different model? Open an issue with the model name. Support depends on its protocol matching, and OpenSCQ30 documents many of them.
+
+Budbar runs on Macs only. iPhones and iPads cannot open the Bluetooth Classic channel these earbuds use, so there is no iOS version.
 
 ## Requirements
 

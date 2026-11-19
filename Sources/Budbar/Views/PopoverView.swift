@@ -7,12 +7,12 @@ struct PopoverView: View {
     @EnvironmentObject private var model: AppModel
 
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 18) {
             HeaderView()
 
             Group {
                 if model.isConnected, let state = model.state {
-                    VStack(spacing: 16) {
+                    VStack(spacing: 18) {
                         ModePicker(selected: state.soundModes.ambient)
                         ModeDetail(modes: state.soundModes)
                         BatteryRow(state: state)
@@ -27,8 +27,24 @@ struct PopoverView: View {
 
             FooterView()
         }
-        .padding(18)
+        .padding(20)
         .frame(width: Metrics.popoverWidth)
+        .background(alignment: .top) {
+            Ellipse()
+                .fill(glowColor.opacity(0.22))
+                .frame(width: 320, height: 180)
+                .blur(radius: 55)
+                .offset(y: -70)
+                .animation(.easeInOut(duration: 0.5), value: glowColor)
+                .allowsHitTesting(false)
+        }
+    }
+
+    private var glowColor: Color {
+        if model.isConnected, let modes = model.state?.soundModes {
+            return modes.ambient.tint
+        }
+        return .gray
     }
 }
 
@@ -37,16 +53,25 @@ struct PopoverView: View {
 struct HeaderView: View {
     @EnvironmentObject private var model: AppModel
 
+    private var iconTint: Color {
+        if model.isConnected, let modes = model.state?.soundModes {
+            return modes.ambient.tint
+        }
+        return Color.gray
+    }
+
     var body: some View {
         HStack(spacing: 12) {
             ZStack {
-                RoundedRectangle(cornerRadius: 11, style: .continuous)
-                    .fill(Color.accentColor.gradient)
+                RoundedRectangle(cornerRadius: 13, style: .continuous)
+                    .fill(iconTint.gradient)
+                    .shadow(color: iconTint.opacity(0.4), radius: 8, y: 3)
                 Image(systemName: "earbuds")
-                    .font(.system(size: 17, weight: .semibold))
+                    .font(.system(size: 19, weight: .semibold))
                     .foregroundStyle(.white)
             }
-            .frame(width: 38, height: 38)
+            .frame(width: 44, height: 44)
+            .animation(.easeInOut(duration: 0.4), value: iconTint)
 
             VStack(alignment: .leading, spacing: 3) {
                 Text(model.deviceTitle)
