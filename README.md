@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/icon.png" width="128" alt="Budbar icon"></p>
+
 # Budbar
 
 A native macOS menu bar app for controlling Soundcore earbuds. Switch between Noise Cancelling, Transparency and Normal, tweak the options for each mode, and see battery levels for each bud and the case, without picking up your phone.
@@ -5,11 +7,6 @@ A native macOS menu bar app for controlling Soundcore earbuds. Switch between No
 **Status: early development.** Built for the Soundcore R60i NC (and the closely related P31i). It has not been tested on other models. Expect rough edges.
 
 > Unofficial. Not affiliated with, endorsed by, or sponsored by Anker or Soundcore.
-
-<p align="center">
-  <img src="docs/screenshots/popover.png" width="360" alt="Budbar popover">
-  <img src="docs/screenshots/transparency.png" width="360" alt="Budbar in Transparency mode">
-</p>
 
 ## Features
 

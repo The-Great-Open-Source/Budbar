@@ -6,6 +6,7 @@
     <key>CFBundleExecutable</key><string>Budbar</string>
     <key>CFBundleIdentifier</key><string>com.thegreatopensource.budbar</string>
     <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+    <key>CFBundleIconFile</key><string>AppIcon</string>
     <key>CFBundleName</key><string>Budbar</string>
     <key>CFBundleDisplayName</key><string>Budbar</string>
     <key>CFBundlePackageType</key><string>APPL</string>
