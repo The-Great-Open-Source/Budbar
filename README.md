@@ -35,6 +35,12 @@ Budbar runs on Macs only. iPhones and iPads cannot open the Bluetooth Classic ch
 - macOS 14 or newer
 - Swift 5.9+ toolchain (Xcode 15 or newer, or the command line tools)
 
+## Install
+
+Download the latest `Budbar-x.y.z.zip` from the [Releases](https://github.com/The-Great-Open-Source/Budbar/releases) page, unzip it, and drag Budbar to Applications.
+
+Budbar is not notarized yet, so macOS blocks the first launch. Right-click the app, choose Open, then confirm. If macOS says the app is damaged, run `xattr -cr /Applications/Budbar.app` once.
+
 ## Build and run
 
 ```sh
