@@ -41,6 +41,7 @@ Budbar runs on Macs only. iPhones and iPads cannot open the Bluetooth Classic ch
 swift build        # compile
 swift test         # protocol tests
 scripts/bundle.sh --open   # build build/Budbar.app and launch it
+scripts/install.sh         # build, copy to /Applications and launch
 ```
 
 Try the UI without earbuds:
